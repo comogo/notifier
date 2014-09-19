@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Foo/</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/notificator.js"></script>
+  </head>
+
+  <body>
+    Meu id: <input id="my_id" type="text" name="my_id" />
+    <input id="connect" type="button" value="Conectar" /><br />
+
+    Destino: <select id="user_id" name="user_id">
+        </select>
+
+    <br />
+    Message: <input id="message" type="text" name="message" /><br />
+
+    <input id="send" type="button" value="Enviar" />
+
+    <script type="text/javascript">
+      window.notificator = new Notificator('', {
+        events: {
+          'updateUsers': function(data){
+            var users = data.users
+            var $users = $('#user_id'),
+                userId = 0;
+
+            $users.empty();
+
+            for(var i in users) {
+              userId = users[i];
+
+              if (userId != this.userId) {
+                $users.append($('<option>').val(userId).text(userId));
+              }
+            }
+          }
+        }
+      });
+
+      $('#connect').on('click', function() {
+        var apiKey = $('#my_id').val();
+
+        window.notificator.apiKey = apiKey;
+        window.notificator.connect();
+      });
+
+      $('#button')
+    </script>
+  </body>
+</html>
